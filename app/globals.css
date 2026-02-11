@@ -18,6 +18,7 @@
   body {
     @apply bg-white text-gray-900 antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
   }
 
   html {
@@ -161,10 +162,10 @@
   animation: shimmer 2s infinite;
   background: linear-gradient(
     to right,
-    #f6f7f8 0%,
-    #edeef1 20%,
-    #f6f7f8 40%,
-    #f6f7f8 100%
+    #f6f7f8 0%-,
+    #edeef1 20%-,
+    #f6f7f8 40%-,
+    #f6f7f8 100%-
   );
   background-size: 1000px 100%;
 }
