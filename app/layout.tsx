@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import PWAInstallPrompt from "@/components/PWAInstallPrompt";
+import ServiceWorkerRegistrar from "@/components/ServiceWorkerRegistrar";
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -88,12 +88,12 @@ export const metadata: Metadata = {
       { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
-  manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
     title: 'Jentu.it',
   },
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
@@ -125,7 +125,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <PWAInstallPrompt />
+        <ServiceWorkerRegistrar />
       </body>
     </html>
   );

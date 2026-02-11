@@ -118,8 +118,8 @@
   /* Utility per mobile */
   @media (max-width: 768px) {
     .scroll-container {
-      @apply overflow-x-auto overflow-y-hidden;
-      max-height: none;
+      @apply overflow-y-auto; /* Keep vertical scroll */
+      max-height: 70vh; /* Adjust height for mobile */
     }
   }
 

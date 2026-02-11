@@ -16,14 +16,14 @@ export default function Home() {
   return (
     <div>
       {/* Top Banner - Brindisi & Taranto Link */}
-      <div className="bg-gradient-to-r from-jentu-teal to-jentu-teal-dark text-white text-center py-3 shadow-md">
+      <div className="bg-jentu-teal/10 text-jentu-teal-dark text-center py-2 shadow-sm">
         <Link 
           href="/itria" 
-          className="font-semibold hover:underline inline-flex items-center gap-2 group transition-all duration-300"
+          className="font-semibold hover:underline inline-flex items-center gap-2 group transition-all duration-300 text-sm"
         >
-          <span>Brindisi & Taranto</span>
+          <span>Visita anche la sezione Brindisi & Taranto</span>
           <svg 
-            className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" 
+            className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"

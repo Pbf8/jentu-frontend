@@ -23,12 +23,5 @@
   ],
   "categories": ["weather", "utilities", "lifestyle"],
   "lang": "it",
-  "dir": "ltr",
-  "screenshots": [
-    {
-      "src": "/og-image.png",
-      "sizes": "1200x630",
-      "type": "image/png"
-    }
-  ]
+  "dir": "ltr"
 }

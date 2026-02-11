@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { Home, Camera, Info, Tv, Download, Users, Calendar } from "lucide-react";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -25,13 +26,13 @@ export default function Header() {
   }, []);
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/galleria", label: "Galleria" },
-    { href: "/info", label: "Info" },
-    { href: "/webcam", label: "Webcam" },
-    { href: "/download-app", label: "Download App" },
-    { href: "/chi-siamo", label: "Chi siamo" },
-    { href: "/eventi", label: "Eventi" },
+    { href: "/", label: "Home", icon: Home },
+    { href: "/galleria", label: "Galleria", icon: Camera },
+    { href: "/info", label: "Info", icon: Info },
+    { href: "/webcam", label: "Webcam", icon: Tv },
+    { href: "/download-app", label: "Download App", icon: Download },
+    { href: "/chi-siamo", label: "Chi siamo", icon: Users },
+    { href: "/eventi", label: "Eventi", icon: Calendar },
   ];
 
   return (
@@ -143,12 +144,12 @@ export default function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="px-4 py-3 text-gray-700 hover:text-jentu-teal hover:bg-jentu-teal/5 
-                               rounded-lg transition-colors duration-200 font-medium"
+                    className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:text-jentu-teal hover:bg-jentu-teal/5 rounded-lg transition-colors duration-200 font-medium"
                     style={{ animationDelay: `${index * 50}ms` }}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {link.label}
+                    <link.icon className="w-5 h-5" />
+                    <span>{link.label}</span>
                   </Link>
                 ))}
               </div>

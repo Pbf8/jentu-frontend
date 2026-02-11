@@ -11,9 +11,9 @@ const config: Config = {
       colors: {
         // Colori brand Jentu.it
         'jentu': {
-          teal: '#20B2AA',        // Colore principale
-          'teal-dark': '#1a9690', // Hover states
-          'teal-light': '#4fd1cb', // Accenti
+          teal: '#10B981',        // Colore principale
+          'teal-dark': '#059669', // Hover states
+          'teal-light': '#34D399', // Accenti
           dark: '#0A1628',        // Scuro principale
           'dark-soft': '#1a2942', // Scuro secondario
         },
@@ -57,8 +57,8 @@ const config: Config = {
         },
       },
       boxShadow: {
-        'jentu': '0 4px 6px -1px rgba(32, 178, 170, 0.1), 0 2px 4px -1px rgba(32, 178, 170, 0.06)',
-        'jentu-lg': '0 10px 15px -3px rgba(32, 178, 170, 0.1), 0 4px 6px -2px rgba(32, 178, 170, 0.05)',
+        'jentu': '0 4px 6px -1px rgba(16, 185, 129, 0.1), 0 2px 4px -1px rgba(16, 185, 129, 0.06)',
+        'jentu-lg': '0 10px 15px -3px rgba(16, 185, 129, 0.1), 0 4px 6px -2px rgba(16, 185, 129, 0.05)',
       }
     },
   },
