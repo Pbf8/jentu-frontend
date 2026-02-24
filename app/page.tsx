@@ -1,16 +1,18 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import Image from "next/image";
-import WaveMap from "@/components/WaveMap";
-import { ProverbSkeleton, Top3Skeleton } from "@/components/Skeleton";
-import { getTodayProverb } from "@/data/proverbs";
-import { Suspense, useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
+import Link from 'next/link';
+import Image from 'next/image';
+import WaveMap from '@/components/WaveMap';
+import { ProverbSkeleton, Top3Skeleton } from '@/components/Skeleton';
+import { getTodayProverb } from '@/data/proverbs';
+import { Suspense, useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
+import { useRegion } from '@/context/RegionContext';
 
 export default function Home() {
   const todayProverb = getTodayProverb();
   const [showFab, setShowFab] = useState(false);
+  const { currentRegion } = useRegion();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,38 +25,20 @@ export default function Home() {
 
   return (
     <div>
-      {/* Hero Section with Map */}
-      <section className="container-jentu">
-        <WaveMap region="salento" />
-      </section>
-
-      {/* Brindisi & Taranto Link */}
-      <div className="bg-jentu-teal/10 text-jentu-teal-dark text-center py-3 shadow-inner">
-        <Link 
-          href="/itria" 
-          className="font-semibold hover:underline inline-flex items-center gap-2 group transition-all duration-300 text-sm"
-        >
-          <span>Visita anche la sezione Brindisi & Taranto</span>
-          <svg 
-            className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </Link>
-      </div>
-
-      {/* Main Content */}
-      <section className="container-jentu py-12 md:py-16">
-        {/* Title */}
-        <div className="text-center mb-16 animate-slide-up">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+      {/* Hero Section with Map & Title */}
+      <section className="container-jentu pt-4 md:pt-6 text-center">
+        <div className="h-[65vh] md:h-[70vh] rounded-2xl overflow-hidden shadow-jentu-lg border border-jentu-teal/10">
+          <WaveMap region={currentRegion} />
+        </div>
+        <div className="py-8">
+          <h1 className="text-5xl md:text-6xl font-bold">
             c'è <span className="text-gradient italic">jentu.it</span>
           </h1>
         </div>
+      </section>
 
+      {/* Main Content */}
+      <section className="container-jentu pb-12 md:pb-16">
         {/* Proverbio del giorno */}
         <div className="max-w-4xl mx-auto mb-20 animate-slide-up animate-delay-100">
           <Suspense fallback={<ProverbSkeleton />}>
