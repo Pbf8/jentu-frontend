@@ -86,12 +86,31 @@ export default function WaveMap({ region }: { region: "salento" | "brindisi" }) 
     setIsDragging(true);
     setDragStart({ x: clientX - position.x, y: clientY - position.y });
   };
+  
   const handlePanMove = (clientX: number, clientY: number) => {
-    if (!isDragging) return;
-    const newX = clientX - dragStart.x;
-    const newY = clientY - dragStart.y;
+    if (!isDragging || !containerRef.current) return;
+
+    const { clientWidth: cW, clientHeight: cH } = containerRef.current;
+    const imageWidth = imageDimensions.width * scale;
+    const imageHeight = imageDimensions.height * scale;
+
+    const overflowX = imageWidth > cW ? (imageWidth - cW) / 2 : 0;
+    const overflowY = imageHeight > cH ? (imageHeight - cH) / 2 : 0;
+
+    const minX = -overflowX;
+    const maxX = overflowX;
+    const minY = -overflowY;
+    const maxY = overflowY;
+    
+    let newX = clientX - dragStart.x;
+    let newY = clientY - dragStart.y;
+
+    newX = Math.max(minX, Math.min(newX, maxX));
+    newY = Math.max(minY, Math.min(newY, maxY));
+
     setPosition({ x: newX, y: newY });
   };
+
   const handlePanEnd = () => setIsDragging(false);
 
   return (
@@ -100,7 +119,7 @@ export default function WaveMap({ region }: { region: "salento" | "brindisi" }) 
         <h2 className="text-3xl md:text-4xl font-bold"><span className="text-gradient">Adriatico o Ionio?</span></h2>
       </div>
 
-      <div className="relative" style={{ height: '80vh' }}>
+      <div className="relative" style={{ height: '70vh' }}>
         <div
           ref={containerRef}
           className="relative rounded-2xl overflow-hidden border-2 border-gray-100 shadow-2xl bg-gray-50 h-full flex items-center justify-center"
