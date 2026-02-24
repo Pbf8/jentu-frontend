@@ -28,7 +28,7 @@ export default function ItriaPage() {
       </div>
 
       {/* Hero Section with Map */}
-      <section className="container-jentu py-8 md:py-12">
+      <section className="container-jentu">
         <div className="text-center mb-8 animate-slide-up">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
             Brindisi & Taranto

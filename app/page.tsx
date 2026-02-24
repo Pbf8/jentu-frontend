@@ -34,7 +34,7 @@ export default function Home() {
       </div>
 
       {/* Hero Section with Map */}
-      <section className="container-jentu py-8 md:py-12">
+      <section className="container-jentu">
         <WaveMap region="salento" />
       </section>
 
