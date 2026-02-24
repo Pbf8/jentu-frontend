@@ -251,7 +251,7 @@ export default function WaveMap({ region }: WaveMapProps) {
 
           {/* Loading */}
           {!imageLoaded && !imageError && (
-            <div className="absolute inset-0 shimmer animate-pulse min-h-[400px] md:min-h-[600px]">
+            <div className="absolute inset-0 shimmer animate-pulse min-h-[600px] md:min-h-[800px]">
               <div className="flex items-center justify-center h-full">
                 <div className="text-center">
                   <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-jentu-teal border-t-transparent mb-4" />
@@ -263,7 +263,7 @@ export default function WaveMap({ region }: WaveMapProps) {
 
           {/* Error */}
           {imageError && (
-            <div className="flex items-center justify-center min-h-[400px] md:min-h-[600px] bg-gray-50">
+            <div className="flex items-center justify-center min-h-[600px] md:min-h-[800px] bg-gray-50">
               <div className="text-center px-4">
                 <svg className="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
