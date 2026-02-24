@@ -1,22 +1,35 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import WaveMap from "@/components/WaveMap";
 import { ProverbSkeleton, Top3Skeleton } from "@/components/Skeleton";
 import { getTodayProverb } from "@/data/proverbs";
-import { Suspense } from "react";
-
-export const metadata = {
-  title: "Home",
-  description: "Scopri le previsioni meteo marine del Salento. Mappe interattive delle onde, vento e condizioni del mare aggiornate ogni 2 ore.",
-};
+import { Suspense, useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   const todayProverb = getTodayProverb();
+  const [showFab, setShowFab] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowFab(window.scrollY > 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div>
-      {/* Top Banner - Brindisi & Taranto Link */}
-      <div className="bg-jentu-teal/10 text-jentu-teal-dark text-center py-2 shadow-sm">
+      {/* Hero Section with Map */}
+      <section className="container-jentu">
+        <WaveMap region="salento" />
+      </section>
+
+      {/* Brindisi & Taranto Link */}
+      <div className="bg-jentu-teal/10 text-jentu-teal-dark text-center py-3 shadow-inner">
         <Link 
           href="/itria" 
           className="font-semibold hover:underline inline-flex items-center gap-2 group transition-all duration-300 text-sm"
@@ -33,38 +46,13 @@ export default function Home() {
         </Link>
       </div>
 
-      {/* Hero Section with Map */}
-      <section className="container-jentu">
-        <WaveMap region="salento" />
-      </section>
-
       {/* Main Content */}
       <section className="container-jentu py-12 md:py-16">
-        {/* Title & CTA */}
+        {/* Title */}
         <div className="text-center mb-16 animate-slide-up">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
             c'è <span className="text-gradient italic">jentu.it</span>
           </h1>
-          <Link 
-            href="/download-app"
-            className="inline-flex items-center gap-3 bg-jentu-teal text-white px-8 py-4 rounded-xl 
-                       font-semibold hover:bg-jentu-teal-dark transition-all duration-300 
-                       shadow-jentu-lg hover:shadow-jentu-xl transform hover:-translate-y-0.5
-                       text-lg group"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-            </svg>
-            <span>Scarica l'App</span>
-            <svg 
-              className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
         </div>
 
         {/* Proverbio del giorno */}
@@ -277,6 +265,26 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* FAB - Scarica l'App */}
+      <Link
+        href="/download-app"
+        className={cn(
+          "fixed bottom-5 right-5 z-50 bg-jentu-teal text-white rounded-full shadow-lg",
+          "flex items-center font-semibold",
+          "transform transition-all duration-300 ease-in-out",
+          "hover:scale-105 hover:shadow-xl active:scale-95",
+          // Mobile: circular, Desktop: pill
+          "p-3 sm:py-3 sm:px-6",
+          // Animation
+          showFab ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"
+        )}
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+        </svg>
+        <span className="hidden sm:inline sm:ml-2">Scarica l'App</span>
+      </Link>
     </div>
   );
 }
