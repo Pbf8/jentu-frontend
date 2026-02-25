@@ -27,7 +27,7 @@ export default function Home() {
     <div>
       {/* Hero Section with Map & Title */}
       <section className="container-jentu pt-4 md:pt-6 text-center">
-        <div className="h-[65vh] md:h-[70vh] rounded-2xl overflow-hidden shadow-jentu-lg border border-jentu-teal/10">
+        <div className="h-[65vh] md:h-[70vh] rounded-2xl overflow-hidden shadow-jentu-lg">
           <WaveMap region={currentRegion} />
         </div>
         <div className="py-8">

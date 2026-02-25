@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useRef, useLayoutEffect, useCallback } from "react";
 import Image from "next/image";
@@ -114,12 +114,12 @@ export default function WaveMap({ region }: { region: "salento" | "brindisi" }) 
   const handlePanEnd = () => setIsDragging(false);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full flex flex-col">
       <div className="text-center mb-6 animate-slide-up">
         <h2 className="text-3xl md:text-4xl font-bold"><span className="text-gradient">Adriatico o Ionio?</span></h2>
       </div>
 
-      <div className="relative" style={{ height: '80vh' }}>
+      <div className="relative flex-grow">
         <div
           ref={containerRef}
           className="relative rounded-2xl overflow-hidden border-2 border-gray-100 shadow-2xl bg-gray-50 h-full flex items-center justify-center"

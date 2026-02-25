@@ -145,7 +145,7 @@
 
   /* Container max-width personalizzato */
   .container-jentu {
-    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 py-2;
   }
 }
 
