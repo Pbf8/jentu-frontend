@@ -3,19 +3,18 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
-import { useRegion } from '@/context/RegionContext';
+import { useRegion, Region } from '@/context/RegionContext';
 
-const locations = [
+const locations: { id: Region; name: string }[] = [
   { id: 'salento', name: 'Lecce' },
   { id: 'brindisi', name: 'Brindisi' },
-  { id: 'taranto', name: 'Taranto' },
 ];
 
 export default function LocationSelector() {
   const [isOpen, setIsOpen] = useState(false);
   const { currentRegion, setCurrentRegion } = useRegion();
 
-  const handleSelection = (locationId: string) => {
+  const handleSelection = (locationId: Region) => {
     setCurrentRegion(locationId);
     setIsOpen(false);
   };
