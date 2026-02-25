@@ -12,16 +12,25 @@ import { useRegion } from '@/context/RegionContext';
 export default function Home() {
   const todayProverb = getTodayProverb();
   const [showFab, setShowFab] = useState(false);
+  const [fabLabelVisible, setFabLabelVisible] = useState(false);
   const { currentRegion } = useRegion();
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowFab(window.scrollY > 100);
+      const shouldShow = window.scrollY > 200;
+      if (shouldShow && !showFab) {
+        setShowFab(true);
+        setFabLabelVisible(true);
+        setTimeout(() => setFabLabelVisible(false), 3000);
+      }
+      if (!shouldShow && showFab) {
+        setShowFab(false);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [showFab]);
 
   return (
     <div>
@@ -36,7 +45,6 @@ export default function Home() {
           </h1>
         </div>
       </section>
-
       {/* Main Content */}
       <section className="container-jentu pb-12 md:pb-16">
         {/* Proverbio del giorno */}
@@ -249,26 +257,37 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* FAB - Scarica l'App */}
-      <Link
-        href="/download-app"
+      <div
         className={cn(
-          "fixed bottom-5 right-5 z-50 bg-jentu-teal text-white rounded-full shadow-lg",
-          "flex items-center font-semibold",
-          "transform transition-all duration-300 ease-in-out",
-          "hover:scale-105 hover:shadow-xl active:scale-95",
-          // Mobile: circular, Desktop: pill
-          "p-3 sm:py-3 sm:px-6",
-          // Animation
-          showFab ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"
+          "fixed bottom-5 right-5 z-50 flex items-center",
+          {
+            "animate-bounce-in": showFab,
+            "opacity-0 pointer-events-none": !showFab,
+          }
         )}
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-        </svg>
-        <span className="hidden sm:inline sm:ml-2">Scarica l'App</span>
-      </Link>
+        <Link
+          href="/download-app"
+          className={cn(
+            "bg-jentu-teal text-white rounded-full shadow-fab",
+            "flex items-center font-semibold",
+            "transform transition-all duration-200 ease-in-out",
+            "active:scale-90",
+            "w-14 h-14 justify-center relative group animate-pulse-custom"
+          )}>
+
+          <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+
+        </Link>
+        {fabLabelVisible && (
+          <span className="ml-3 px-4 py-2 bg-gray-800 text-white text-sm rounded-lg shadow-xl label-fade-out">
+            Scarica l'App
+          </span>
+        )}
+      </div>
     </div>
   );
 }
