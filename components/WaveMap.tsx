@@ -93,20 +93,17 @@ export default function WaveMap({ region }: { region: "salento" | "brindisi" }) 
     const { clientWidth: cW, clientHeight: cH } = containerRef.current;
     const imageWidth = imageDimensions.width * scale;
     const imageHeight = imageDimensions.height * scale;
-
-    const overflowX = imageWidth > cW ? (imageWidth - cW) / 2 : 0;
-    const overflowY = imageHeight > cH ? (imageHeight - cH) / 2 : 0;
-
-    const minX = -overflowX;
-    const maxX = overflowX;
-    const minY = -overflowY;
-    const maxY = overflowY;
     
     let newX = clientX - dragStart.x;
     let newY = clientY - dragStart.y;
 
-    newX = Math.max(minX, Math.min(newX, maxX));
-    newY = Math.max(minY, Math.min(newY, maxY));
+    // Calculate the maximum pannable distance from the center, using Math.floor to be stricter
+    const xMax = Math.floor(Math.max(0, (imageWidth - cW) / 2));
+    const yMax = Math.floor(Math.max(0, (imageHeight - cH) / 2));
+
+    // Clamp the position to within the boundaries
+    newX = Math.max(-xMax, Math.min(newX, xMax));
+    newY = Math.max(-yMax, Math.min(newY, yMax));
 
     setPosition({ x: newX, y: newY });
   };
