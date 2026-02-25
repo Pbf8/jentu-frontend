@@ -50,7 +50,7 @@ export default function WaveMap({ region }: { region: "salento" | "brindisi" }) 
     const container = containerRef.current;
     if (imageLoaded && container) {
       calculateAndSetScale();
-      const resizeObserver = new ResizeObserver(calculateAndSetScale);
+      const resizeObserver = new ResizeObserver(() => calculateAndSetScale());
       resizeObserver.observe(container);
       return () => resizeObserver.disconnect();
     }
@@ -78,9 +78,9 @@ export default function WaveMap({ region }: { region: "salento" | "brindisi" }) 
     if (newScale <= baseScale) setPosition({ x: 0, y: 0 });
     setScale(newScale);
   };
-  const handleZoomReset = () => {
+  const handleZoomReset = useCallback(() => {
       calculateAndSetScale();
-  };
+  }, [calculateAndSetScale]);
 
   const handlePanStart = (clientX: number, clientY: number) => {
     setIsDragging(true);
