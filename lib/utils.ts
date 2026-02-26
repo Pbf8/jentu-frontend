@@ -1,4 +1,11 @@
-// Utility functions per Jentu.it
+'use client';
+
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 /**
  * Costruisce l'URL per le immagini delle mappe da Railway
@@ -11,9 +18,10 @@ export function getMapImageUrl(region: 'salento' | 'brindisi', timeframe: 'today
       ? `${baseUrl}salento/salento_wave_map.png`
       : `${baseUrl}salento/salento_forecast_map.png`;
   } else {
+    // Corrected the path for the Brindisi region
     return timeframe === 'today'
-      ? `${baseUrl}%20brindisi/itria_wave_map.png`
-      : `${baseUrl}%20brindisi/itria_forecast_map.png`;
+      ? `${baseUrl}brindisi/itria_wave_map.png`
+      : `${baseUrl}brindisi/itria_forecast_map.png`;
   }
 }
 
@@ -64,13 +72,6 @@ export function debounce<T extends (...args: any[]) => any>(
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
   };
-}
-
-/**
- * Classnames helper (tipo cn() di shadcn)
- */
-export function cn(...classes: (string | undefined | null | false)[]): string {
-  return classes.filter(Boolean).join(' ');
 }
 
 /**
