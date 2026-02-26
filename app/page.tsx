@@ -39,10 +39,19 @@ export default function Home() {
         <div className="h-[65vh] md:h-[70vh] rounded-2xl overflow-hidden shadow-jentu-lg">
           <WaveMap region={currentRegion} />
         </div>
-        <div className="py-8">
-          <h1 className="text-5xl md:text-6xl font-bold">
-            c'è <span className="text-gradient italic">jentu.it</span>
-          </h1>
+        <div className="py-8 grid grid-cols-3 gap-4">
+          <Link href="/alloggi" className="text-center group">
+            <div className="mb-2 text-4xl">🏨</div>
+            <h2 className="text-xl font-bold group-hover:text-jentu-teal transition-colors">Alloggi</h2>
+          </Link>
+          <Link href="/barche" className="text-center group">
+            <div className="mb-2 text-4xl">⛵️</div>
+            <h2 className="text-xl font-bold group-hover:text-jentu-teal transition-colors">Barche</h2>
+          </Link>
+          <Link href="/servizi" className="text-center group">
+            <div className="mb-2 text-4xl">🛠️</div>
+            <h2 className="text-xl font-bold group-hover:text-jentu-teal transition-colors">Servizi</h2>
+          </Link>
         </div>
       </section>
       {/* Main Content */}
