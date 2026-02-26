@@ -28,7 +28,7 @@ export default function Home() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: false });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [showFab]);
 

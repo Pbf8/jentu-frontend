@@ -108,11 +108,6 @@ const useMapInteraction = (imageDimensions: {width: number, height: number}, ima
     if (pointers.current.length === 0) setIsInteracting(false);
   };
 
-  const handleWheel = (e: WheelEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    handleZoom(-e.deltaY * 0.005, e.clientX, e.clientY);
-  };
-
   const handleZoom = useCallback((zoomFactor: number, clientX: number, clientY: number) => {
     if (!containerRef.current) return;
     const maxScale = baseScale * MAX_SCALE_FACTOR;
@@ -131,13 +126,28 @@ const useMapInteraction = (imageDimensions: {width: number, height: number}, ima
     setScale(newScale);
   }, [scale, baseScale, position, clampPosition]);
 
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      handleZoom(-e.deltaY * 0.005, e.clientX, e.clientY);
+    };
+
+    node.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      node.removeEventListener('wheel', handleWheel);
+    };
+  }, [handleZoom]);
+
   const handleZoomIn = () => handleZoom(ZOOM_INCREMENT, containerRef.current?.clientWidth / 2 ?? 0, containerRef.current?.clientHeight / 2 ?? 0);
   const handleZoomOut = () => handleZoom(-ZOOM_INCREMENT, containerRef.current?.clientWidth / 2 ?? 0, containerRef.current?.clientHeight / 2 ?? 0);
   const handleZoomReset = () => calculateAndSetScale();
 
   return {
     containerRef, scale, baseScale, position, isInteracting, pointerCount,
-    events: { onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, onPointerCancel: handlePointerUp, onWheel: handleWheel },
+    events: { onPointerDown: handlePointerDown, onPointerMove: handlePointerMove, onPointerUp: handlePointerUp, onPointerCancel: handlePointerUp },
     controls: { handleZoomIn, handleZoomOut, handleZoomReset },
   };
 };
