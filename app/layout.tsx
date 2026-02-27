@@ -1,26 +1,19 @@
-'use client';
-
+import type { Viewport } from 'next';
+import ClientLayout from './client-layout';
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import ServiceWorkerRegistrar from "@/components/ServiceWorkerRegistrar";
-import { RegionProvider } from "@/context/RegionContext";
+ 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="it" className="scroll-smooth">
-      <head>
-        {/* Metatag e link verranno inseriti qui da Next.js */}
-      </head>
       <body className="min-h-screen flex flex-col bg-gray-50">
-        <RegionProvider>
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-        </RegionProvider>
-        <ServiceWorkerRegistrar />
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

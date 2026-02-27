@@ -10,20 +10,27 @@ import LocationSelector from './LocationSelector';
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [show, setShow] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+      setScrolled(currentScrollY > 10);
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 10) {
+        // Scrolling down
         setShow(false);
       } else {
+        // Scrolling up or at the top
         setShow(true);
       }
+      
       lastScrollY.current = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -41,9 +48,9 @@ export default function Header() {
     <>
       <header 
         className={cn(
-          'bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-30 transition-transform duration-300 ease-in-out',
-          show ? 'transform-none' : '-translate-y-full',
-          lastScrollY.current > 10 && 'shadow-md'
+          'bg-white/80 backdrop-blur-lg sticky z-30 transition-all duration-300',
+          show ? 'top-0' : '-top-24', 
+          scrolled ? 'shadow-md' : 'shadow-sm'
         )}
       >
         <div className="container-jentu">

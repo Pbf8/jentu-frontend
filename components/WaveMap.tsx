@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback, PointerEvent, WheelEvent } from "react";
+import { useState, useRef, useEffect, useCallback, PointerEvent } from "react";
 import Image from "next/image";
 import { getMapImageUrl, cn } from "@/lib/utils";
 
@@ -37,7 +37,7 @@ const useMapInteraction = (imageDimensions: {width: number, height: number}, ima
   const [isInteracting, setIsInteracting] = useState(false);
   const [pointerCount, setPointerCount] = useState(0);
 
-  const pointers = useRef<PointerEvent[]>([]);
+  const pointers = useRef<PointerEvent<Element>[]>([]);
   const lastPointerDist = useRef(0);
 
   const calculateAndSetScale = useCallback(() => {
@@ -141,8 +141,16 @@ const useMapInteraction = (imageDimensions: {width: number, height: number}, ima
     };
   }, [handleZoom]);
 
-  const handleZoomIn = () => handleZoom(ZOOM_INCREMENT, containerRef.current?.clientWidth / 2 ?? 0, containerRef.current?.clientHeight / 2 ?? 0);
-  const handleZoomOut = () => handleZoom(-ZOOM_INCREMENT, containerRef.current?.clientWidth / 2 ?? 0, containerRef.current?.clientHeight / 2 ?? 0);
+  const handleZoomIn = () => {
+    if (containerRef.current) {
+      handleZoom(ZOOM_INCREMENT, containerRef.current.clientWidth / 2, containerRef.current.clientHeight / 2);
+    }
+  };
+  const handleZoomOut = () => {
+    if (containerRef.current) {
+      handleZoom(-ZOOM_INCREMENT, containerRef.current.clientWidth / 2, containerRef.current.clientHeight / 2);
+    }
+  };
   const handleZoomReset = () => calculateAndSetScale();
 
   return {
