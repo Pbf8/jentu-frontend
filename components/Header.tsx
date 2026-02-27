@@ -2,20 +2,28 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Home, Camera, Info, Tv, Download, Users, Calendar, Menu, X } from 'lucide-react';
 import LocationSelector from './LocationSelector';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [show, setShow] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setShow(false);
+      } else {
+        setShow(true);
+      }
+      lastScrollY.current = currentScrollY;
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -33,13 +41,13 @@ export default function Header() {
     <>
       <header 
         className={cn(
-          'bg-white/80 backdrop-blur-lg sticky top-0 z-30 transition-shadow duration-300',
-          scrolled ? 'shadow-md' : 'shadow-sm'
+          'bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-30 transition-transform duration-300 ease-in-out',
+          show ? 'transform-none' : '-translate-y-full',
+          lastScrollY.current > 10 && 'shadow-md'
         )}
       >
         <div className="container-jentu">
           <div className="relative flex items-center justify-center h-16">
-            {/* Left: Hamburger Menu */}
             <div className="absolute left-0">
               <button
                 className="p-2 text-gray-700 hover:text-jentu-teal transition-colors rounded-lg hover:bg-gray-100"
@@ -50,7 +58,6 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Center: Logo */}
             <div className="absolute left-1/2 -translate-x-1/2">
               <Link href="/" className="flex items-center group">
                 <div className="relative w-24 h-10 transition-transform duration-300 group-hover:scale-105">
@@ -66,7 +73,6 @@ export default function Header() {
               </Link>
             </div>
 
-            {/* Right: Location Selector */}
             <div className="absolute right-0">
               <LocationSelector />
             </div>
@@ -74,7 +80,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile Navigation Overlay */}
       {mobileMenuOpen && (
         <>
           <div 
