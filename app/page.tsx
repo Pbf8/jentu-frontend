@@ -8,6 +8,7 @@ import { getTodayProverb } from '@/data/proverbs';
 import { Suspense, useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { useRegion } from '@/context/RegionContext';
+import Top3LowestWaves from '@/components/Top3LowestWaves';
 
 export default function Home() {
   const todayProverb = getTodayProverb();
@@ -101,97 +102,13 @@ export default function Home() {
               <svg className="w-9 h-9 text-jentu-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
               </svg>
-              Ecco la top 3 del momento
+              Top 3: Mare più calmo
             </h3>
-            <p className="text-gray-600 text-lg">In base a Sole, Mare e jentu</p>
+            <p className="text-gray-600 text-lg">Le località con le onde più basse in questo momento.</p>
           </div>
           
           <Suspense fallback={<Top3Skeleton />}>
-            <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-              {/* 1° Posto */}
-              <div className="card card-hover bg-gradient-to-br from-white to-jentu-teal/5 
-                              border-t-4 border-jentu-teal group">
-                <div className="p-8 text-center">
-                  <div className="mb-4 relative">
-                    <div className="text-7xl font-black text-jentu-teal relative">
-                      1°
-                      <div className="absolute -top-2 -right-2 text-3xl">🏆</div>
-                    </div>
-                  </div>
-                  <h4 className="text-2xl font-bold mb-2 group-hover:text-jentu-teal transition-colors">
-                    Torre dell'Orso
-                  </h4>
-                  <p className="text-jentu-teal font-semibold mb-4">Condizioni ottimali</p>
-                  <div className="flex justify-center gap-4 text-sm text-gray-600">
-                    <span className="flex items-center gap-1">
-                      ☀️ <strong>10</strong>/10
-                    </span>
-                    <span className="flex items-center gap-1">
-                      🌊 <strong>3</strong>/10
-                    </span>
-                    <span className="flex items-center gap-1">
-                      💨 <strong>5</strong>/10
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* 2° Posto */}
-              <div className="card card-hover bg-gradient-to-br from-white to-gray-50 
-                              border-t-4 border-gray-400 group">
-                <div className="p-8 text-center">
-                  <div className="mb-4">
-                    <div className="text-7xl font-black text-gray-500 relative">
-                      2°
-                      <div className="absolute -top-2 -right-2 text-3xl">🥈</div>
-                    </div>
-                  </div>
-                  <h4 className="text-2xl font-bold mb-2 group-hover:text-gray-600 transition-colors">
-                    Porto Cesareo
-                  </h4>
-                  <p className="text-gray-600 font-semibold mb-4">Mare calmo</p>
-                  <div className="flex justify-center gap-4 text-sm text-gray-600">
-                    <span className="flex items-center gap-1">
-                      ☀️ <strong>9</strong>/10
-                    </span>
-                    <span className="flex items-center gap-1">
-                      🌊 <strong>2</strong>/10
-                    </span>
-                    <span className="flex items-center gap-1">
-                      💨 <strong>4</strong>/10
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* 3° Posto */}
-              <div className="card card-hover bg-gradient-to-br from-white to-orange-50 
-                              border-t-4 border-orange-400 group">
-                <div className="p-8 text-center">
-                  <div className="mb-4">
-                    <div className="text-7xl font-black text-orange-500 relative">
-                      3°
-                      <div className="absolute -top-2 -right-2 text-3xl">🥉</div>
-                    </div>
-                  </div>
-                  <h4 className="text-2xl font-bold mb-2 group-hover:text-orange-600 transition-colors">
-                    Gallipoli
-                  </h4>
-                  <p className="text-orange-600 font-semibold mb-4">Buone condizioni</p>
-                  <div className="flex justify-center gap-4 text-sm text-gray-600">
-                    <span className="flex items-center gap-1">
-                      ☀️ <strong>8</strong>/10
-                    </span>
-                    <span className="flex items-center gap-1">
-                      🌊 <strong>4</strong>/10
-                    </span>
-                    <span className="flex items-center gap-1">
-                      💨 <strong>6</strong>/10
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Top3LowestWaves />
           </Suspense>
         </div>
 
