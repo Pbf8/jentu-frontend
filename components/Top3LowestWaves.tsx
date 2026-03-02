@@ -9,9 +9,6 @@ interface WaveData {
   wave: number;
 }
 
-// The base URL for the backend API, taken from lib/utils.ts
-const baseUrl = 'https://jentu-production.up.railway.app';
-
 export default function Top3LowestWaves() {
   const [data, setData] = useState<WaveData[] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -21,8 +18,7 @@ export default function Top3LowestWaves() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // Construct the full API URL
-        const res = await fetch(`${baseUrl}/api/get_lowest_waves`);
+        const res = await fetch('/api/get_lowest_waves');
         if (!res.ok) {
           throw new Error('Failed to fetch data');
         }
@@ -55,7 +51,7 @@ export default function Top3LowestWaves() {
   if (error || !data) {
     return (
       <div className="text-center py-4 px-6 bg-red-100 rounded-lg">
-        <p className="text-red-700 font-medium">⚠️ Impossibile caricare i dati. Riprova più tardi.</p>
+        <p className="text-red-700 font-medium">⚠️ Errore nel caricamento dei dati (v3). Il proxy non funziona.</p>
       </div>
     );
   }
