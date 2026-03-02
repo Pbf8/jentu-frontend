@@ -1,0 +1,4 @@
+{
+  "/page": "app/page.js",
+  "/api/get_lowest_waves/route": "app/api/get_lowest_waves/route.js"
+}

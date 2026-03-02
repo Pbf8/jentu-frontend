@@ -5,11 +5,25 @@ export async function GET() {
   // The corrected target URL of the real backend API
   const targetUrl = 'https://jentu-production.up.railway.app/get_lowest_waves';
 
+  // Get credentials from environment variables
+  const username = process.env.JENTU_USERNAME;
+  const password = process.env.JENTU_PASSWORD;
+
+  // If credentials are not set, return an error
+  if (!username || !password) {
+    console.error('Missing JENTU_USERNAME or JENTU_PASSWORD environment variables');
+    return new NextResponse('Authentication credentials are not configured', { status: 500 });
+  }
+
+  // Create the Basic Auth header
+  const auth = Buffer.from(`${username}:${password}`).toString('base64');
+
   try {
     // Make a server-to-server request to the real backend
     const res = await fetch(targetUrl, {
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Basic ${auth}`,
       },
       // It's good practice to revalidate data periodically.
       // This tells Next.js to cache the result for 60 seconds.
