@@ -1,9 +1,25 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
+
+interface WaveData {
+  location: string;
+  territory: string;
+  wave_height: string;
+  wave_period_s?: number;
+  wind_direction?: string;
+  wind_speed_kmh?: number;
+  temp?: number;
+  water_temperature?: number;
+  weather?: string;
+}
 
 // This function handles GET requests to /api/get_lowest_waves
-export async function GET() {
+export async function GET(request: NextRequest) {
   // The corrected target URL of the real backend API
   const targetUrl = 'https://jentu-production.up.railway.app/get_lowest_waves';
+
+  // Get the region parameter from the query string
+  const searchParams = request.nextUrl.searchParams;
+  const region = searchParams.get('region') || 'brindisi';
 
   // Get credentials from environment variables
   const username = process.env.JENTU_USERNAME;
@@ -37,9 +53,27 @@ export async function GET() {
     }
 
     // Parse the JSON data from the backend
-    const data = await res.json();
+    let data = await res.json() as WaveData[];
 
-    // Send the data back to the frontend client
+    // Filter data based on the selected region/territory
+    if (region === 'salento') {
+      // For Lecce (homepage), filter for territory="Salento"
+      data = data.filter((item) => item.territory === 'Salento');
+    } else if (region === 'brindisi') {
+      // For Brindisi, filter for territory="Alto Salento"
+      data = data.filter((item) => item.territory === 'Alto Salento');
+    }
+
+    // Sort by wave_height (lowest waves first) and take the top 3
+    data = data
+      .sort((a, b) => {
+        const heightA = parseFloat(a.wave_height);
+        const heightB = parseFloat(b.wave_height);
+        return heightA - heightB;
+      })
+      .slice(0, 3);
+
+    // Send the filtered data back to the frontend client
     return NextResponse.json(data);
 
   } catch (error) {
