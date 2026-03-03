@@ -18,10 +18,9 @@ export function getMapImageUrl(region: 'salento' | 'brindisi', timeframe: 'today
       ? `${baseUrl}salento/salento_wave_map.png`
       : `${baseUrl}salento/salento_forecast_map.png`;
   } else { // region === 'brindisi'
-    // Corrected path to use 'brindisi' instead of 'itria'
     return timeframe === 'today'
-      ? `${baseUrl}brindisi/brindisi_wave_map.png`
-      : `${baseUrl}brindisi/brindisi_forecast_map.png`;
+      ? `${baseUrl} brindisi/itria_wave_map.png`
+      : `${baseUrl} brindisi/itria_forecast_map.png`;
   }
 }
 
