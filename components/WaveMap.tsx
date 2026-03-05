@@ -71,9 +71,18 @@ const useMapInteraction = (imageDimensions: {width: number, height: number}, ima
     const { clientWidth, clientHeight } = containerRef.current;
     const imageWidth = imageDimensions.width * currentScale;
     const imageHeight = imageDimensions.height * currentScale;
-    const xMax = Math.max(0, (imageWidth - clientWidth) / 2);
-    const yMax = Math.max(0, (imageHeight - clientHeight) / 2);
-    return { x: Math.max(-xMax, Math.min(pos.x, xMax)), y: Math.max(-yMax, Math.min(pos.y, yMax)) };
+    
+    // Quando l'immagine è centrata via flexbox, il suo punto di partenza è al centro
+    // Dobbiamo clamparla per non mostrare spazi bianchi ai lati
+    const maxX = (imageWidth - clientWidth) / 2;
+    const maxY = (imageHeight - clientHeight) / 2;
+    
+    // Se l'immagine è più piccola del container, permettiamo solo posizione 0
+    // Altrimenti, clampamo dai limiti
+    return { 
+      x: imageWidth <= clientWidth ? 0 : Math.max(-maxX, Math.min(pos.x, maxX)), 
+      y: imageHeight <= clientHeight ? 0 : Math.max(-maxY, Math.min(pos.y, maxY)) 
+    };
   }, [imageDimensions]);
 
   const handlePointerDown = (e: PointerEvent<HTMLDivElement>) => {
@@ -120,7 +129,7 @@ const useMapInteraction = (imageDimensions: {width: number, height: number}, ima
     const imageX = (mouseX - position.x) / scale;
     const imageY = (mouseY - position.y) / scale;
     const newPosition = { x: mouseX - imageX * newScale, y: mouseY - imageY * newScale };
-    const clampedPos = newScale <= baseScale ? { x: 0, y: 0 } : clampPosition(newPosition, newScale);
+    const clampedPos = clampPosition(newPosition, newScale);
 
     setPosition(clampedPos);
     setScale(newScale);
@@ -200,7 +209,7 @@ function WaveMapClient({ region }: { region: "salento" | "brindisi" }) {
         </div>
       ) : null}
 
-      <div className="relative will-change-transform" style={{ width: imageDimensions.width, height: imageDimensions.height, transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`, cursor: getCursor(), transition: isInteracting ? 'none' : 'transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94)', opacity: imageLoaded && !imageError ? 1 : 0, }}>
+      <div className="absolute will-change-transform" style={{ width: imageDimensions.width, height: imageDimensions.height, transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`, cursor: getCursor(), transition: isInteracting ? 'none' : 'transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94)', opacity: imageLoaded && !imageError ? 1 : 0, left: '50%', top: '50%', marginLeft: `${-imageDimensions.width / 2}px`, marginTop: `${-imageDimensions.height / 2}px` }}>
         <Image src={imageUrl} alt={`Mappa onde ${region}`} fill priority sizes="(max-width: 768px) 100vw, 800px" onLoad={handleImageLoad} onError={() => setImageError(true)} draggable={false} />
       </div>
 
