@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
 
   // Get the region parameter from the query string
   const searchParams = request.nextUrl.searchParams;
-  const region = searchParams.get('region') || 'brindisi';
+  const region = searchParams.get('region') || 'salento';
 
   // Get credentials from environment variables
   const username = process.env.JENTU_USERNAME;

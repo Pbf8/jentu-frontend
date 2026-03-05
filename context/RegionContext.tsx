@@ -12,7 +12,7 @@ interface RegionContextType {
 const RegionContext = createContext<RegionContextType | undefined>(undefined);
 
 export function RegionProvider({ children }: { children: ReactNode }) {
-  const [currentRegion, setCurrentRegion] = useState<Region>('brindisi');
+  const [currentRegion, setCurrentRegion] = useState<Region>('salento');
   return (
     <RegionContext.Provider value={{ currentRegion, setCurrentRegion }}>
       {children}
