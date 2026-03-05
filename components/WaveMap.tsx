@@ -87,7 +87,7 @@ const useMapInteraction = (imageDimensions: {width: number, height: number}, ima
     if (index === -1) return;
     pointers.current[index] = e;
 
-    if (pointers.current.length === 1 && scale > baseScale) {
+    if (pointers.current.length === 1 && (scale > baseScale || imageDimensions.width > 0)) {
       setPosition(prevPos => clampPosition({ x: prevPos.x + e.movementX, y: prevPos.y + e.movementY }, scale));
     } else if (pointers.current.length === 2) {
       const p1 = pointers.current[0];
@@ -184,9 +184,8 @@ function WaveMapClient({ region }: { region: "salento" | "brindisi" }) {
   };
   
   const getCursor = () => {
-    if (isInteracting && pointerCount === 1 && scale > baseScale) return 'grabbing';
-    if (scale > baseScale) return 'grab';
-    return 'default';
+    if (isInteracting && pointerCount === 1) return 'grabbing';
+    return 'grab';
   }
 
   return (
