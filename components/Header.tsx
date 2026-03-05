@@ -9,9 +9,18 @@ import LocationSelector from './LocationSelector';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [show, setShow] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const lastScrollY = useRef(0);
+
+  const handleCloseMenu = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setMobileMenuOpen(false);
+      setIsClosing(false);
+    }, 400);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,15 +99,21 @@ export default function Header() {
       {mobileMenuOpen && (
         <>
           <div 
-            className="fixed inset-0 bg-black/50 z-40 animate-fade-in"
-            onClick={() => setMobileMenuOpen(false)}
+            className={cn(
+              "fixed inset-0 bg-black/50 z-40 cursor-pointer",
+              isClosing ? "animate-fade-out" : "animate-fade-in"
+            )}
+            onClick={handleCloseMenu}
           />
-          <div className="fixed top-0 left-0 bottom-0 w-4/5 max-w-sm bg-white z-50 shadow-xl animate-slide-in-left">
+          <div className={cn(
+            "fixed top-0 left-0 bottom-0 w-4/5 max-w-sm bg-white z-50 shadow-2xl overflow-y-auto",
+            isClosing ? "animate-slide-out-left" : "animate-slide-in-left"
+          )}>
             <div className="flex items-center justify-between p-4 border-b border-gray-200">
               <span className="font-bold text-lg text-gray-800">Menu</span>
               <button
                 className="p-2 text-gray-700 hover:text-jentu-teal transition-colors rounded-lg hover:bg-gray-100"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={handleCloseMenu}
                 aria-label="Close menu"
               >
                 <X className="w-6 h-6" />
@@ -112,7 +127,7 @@ export default function Header() {
                     href={link.href}
                     className="flex items-center space-x-3 px-4 py-3 text-lg text-gray-700 hover:text-jentu-teal hover:bg-jentu-teal/5 rounded-lg transition-colors duration-200 font-medium"
                     style={{ animationDelay: `${index * 50}ms` }}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={handleCloseMenu}
                   >
                     <link.icon className="w-5 h-5" />
                     <span>{link.label}</span>

@@ -68,7 +68,7 @@ export default function GalleriaPage() {
             Scirocco o Tramontana?
           </h1>
           <p className="text-2xl md:text-3xl font-semibold mb-4">
-            C'è Jentu!
+            C'è Jentu.it!
           </p>
           <p className="text-xl md:text-2xl opacity-90">
             Metti il costume, il mare te lo suggeriamo noi.
