@@ -78,7 +78,7 @@ export default function Header() {
 
             <div className="absolute left-1/2 -translate-x-1/2">
               <Link href="/" className="flex items-center group">
-                <div className="relative w-24 h-10 transition-transform duration-300 group-hover:scale-105">
+                <div className="relative w-32 h-14 transition-transform duration-300 group-hover:scale-105">
                   <Image
                     src="/logo.png"
                     alt="Jentu.it"
