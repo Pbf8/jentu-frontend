@@ -3,11 +3,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Home, Camera, Info, Tv, Download, Users, Calendar, Menu, X } from 'lucide-react';
 import LocationSelector from './LocationSelector';
 
 export default function Header() {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [show, setShow] = useState(true);
@@ -90,7 +92,7 @@ export default function Header() {
             </div>
 
             <div className="absolute right-0">
-              <LocationSelector />
+              {pathname === '/' && <LocationSelector />}
             </div>
           </div>
         </div>
