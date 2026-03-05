@@ -253,7 +253,7 @@ export default function Home() {
         </div>
         <div className="py-8 grid grid-cols-3 gap-4">
           <Link href="/alloggi" className="text-center group">
-            <div className="mb-2 text-4xl">🏨</div>
+            <div className="mb-2 text-4xl">🏡</div>
             <h2 className="text-xl font-bold group-hover:text-jentu-teal transition-colors">
               Alloggi
             </h2>
@@ -265,7 +265,7 @@ export default function Home() {
             </h2>
           </Link>
           <Link href="/servizi" className="text-center group">
-            <div className="mb-2 text-4xl">🛠️</div>
+            <div className="mb-2 text-4xl">🏖️</div>
             <h2 className="text-xl font-bold group-hover:text-jentu-teal transition-colors">
               Servizi
             </h2>
